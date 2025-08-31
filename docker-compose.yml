@@ -1,0 +1,25 @@
+services:
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+
+  # put frontend into docker...
+  #frontend:
+  #  build: ./frontend
+  #  ports:
+  #    - "3000:80"
+  #  depends_on:
+  #    - backend
+
+volumes:
+  mongo-data:
