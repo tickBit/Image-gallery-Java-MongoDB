@@ -32,9 +32,8 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> {}) // ota käyttöön CORS
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v1/register").permitAll()
-                .requestMatchers("/api/v1/login").permitAll()
-                .requestMatchers("/api/v1/**").authenticated()
+                .requestMatchers("/api/v1/pics/**").authenticated()
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
@@ -52,7 +51,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); // React dev server
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-
+        configuration.setAllowCredentials(false);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

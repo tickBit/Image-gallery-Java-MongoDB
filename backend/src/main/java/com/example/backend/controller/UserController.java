@@ -22,39 +22,45 @@ import com.example.backend.service.UserService;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    private final UserRepository userRepo;
-    private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
-    private final JwtService jwtService;
+    @Autowired
+    private UserRepository userRepo;
 
-    public UserController(UserRepository repo, PasswordEncoder passwordEncoder, UserService userService, JwtService jwtService) {
-        this.userRepo = repo;
-        this.passwordEncoder = passwordEncoder;
-        this.userService = userService;
-        this.jwtService = jwtService;
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private JwtService jwtService;
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginDto, Principal p) {
 
         String username = loginDto.getUsername();
         String password = loginDto.getPassword();
 
         if (p != null) {
-            return ResponseEntity.badRequest().body(new LoginResponse(null, 0L));
+            return ResponseEntity.badRequest().body(new LoginResponse("Please logout first"));
         }
 
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            return ResponseEntity.status(401).body(new LoginResponse(null, 0L));
+            return ResponseEntity.status(401).body(new LoginResponse("Invalid credentials"));
         }
-       
-        return ResponseEntity.ok(new LoginResponse(jwtService.generateToken(user), jwtService.getExpirationTime()));
+        
+        user = userService.loginUser(loginDto);
+        String jwtToken = jwtService.generateToken(user);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setTokenExpireTime(jwtService.getExpirationTime());
+
+        return ResponseEntity.ok(loginResponse);
     }
     
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public ResponseEntity<?> reigsterUser(@RequestBody RegisterRequest request, Principal principal) {
         if (principal != null) {
             return ResponseEntity.badRequest().body("Please logout first");
@@ -67,13 +73,16 @@ public class UserController {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword())); // Hash the password
-   
+        user.setEmail(request.getEmail());
+        userRepo.save(user);
+
         // get token immediately after registration
         String jwtToken = jwtService.generateToken(user);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
+        loginResponse.setTokenExpireTime(jwtService.getExpirationTime());
 		
-        return ResponseEntity.ok(new LoginResponse(jwtToken, jwtService.getExpirationTime()));
+        return ResponseEntity.ok(loginResponse);
 
     }
 

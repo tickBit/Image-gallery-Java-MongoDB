@@ -29,10 +29,18 @@ public class UserService {
 
     // Login user and return user details if successful
     public User loginUser(LoginRequest loginDto) {
+		// Authenticate the user
+		authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(
+						loginDto.getUsername(),
+						loginDto.getPassword()
+				)
+		);
 
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+		// If authentication is successful, retrieve user details
 		
 		return userRepository.findByUsername(loginDto.getUsername())
 				.orElseThrow();
 	}
+
 }

@@ -6,7 +6,8 @@ public class LoginResponse {
 	
 	private String token;
 	private long tokenExpireTime;
-	
+	private String msg;
+
 	public LoginResponse(String token, long tokenExpireTime) {
 		this.token = token;
 		this.tokenExpireTime = tokenExpireTime;
@@ -14,6 +15,10 @@ public class LoginResponse {
 
 	public LoginResponse() {
 		
+	}
+
+	public LoginResponse(String msg) {
+		this.msg = msg;
 	}
 	
 	public String getToken() {
