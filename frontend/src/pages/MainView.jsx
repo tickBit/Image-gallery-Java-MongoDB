@@ -100,6 +100,7 @@ function MainView() {
                                                     <p>{picture.description}</p>
                                                 </div>
                                             )}
+                                           
                                         </div>
                                     ))
                                 ) : (
@@ -107,8 +108,9 @@ function MainView() {
                                 )}
                             </div>
                         ) : (
-                            <p>Perhaps token expired. Please log out and then log in again</p>
-                        )}
+                            <Spinner /> 
+                        )
+                        }
                     </div>
 
                 </div>
