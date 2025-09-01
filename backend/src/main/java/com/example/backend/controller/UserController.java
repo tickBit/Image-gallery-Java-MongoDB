@@ -86,7 +86,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/deleteme")
+    @DeleteMapping("/auth/deleteme")
     public void deleteMe(Authentication authentication) {
 
         if (authentication == null || !authentication.isAuthenticated()) {

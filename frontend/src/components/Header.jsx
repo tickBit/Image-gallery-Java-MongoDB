@@ -24,7 +24,7 @@ function Header() {
       return;
     }
       
-    await axios.delete('http://localhost:8080/api/v1/deleteme', {
+    await axios.delete('http://localhost:8080/api/v1/auth/deleteme', {
           headers: {
                     'Authorization': `Bearer ${token}`
                    }

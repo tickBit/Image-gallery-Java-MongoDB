@@ -7,7 +7,7 @@ export const fetchPics = createAsyncThunk(
   async (token, thunkAPI) => {
 
     try {
-      const response = await axios.get('http://localhost:8080/api/v1/getUserPics', {
+      const response = await axios.get('http://localhost:8080/api/v1/pics/getUserPics', {
         headers: {
         "Authorization": `Bearer ${token}`
         }

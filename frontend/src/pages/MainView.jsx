@@ -35,7 +35,7 @@ function MainView() {
         
         if (!token) return;            
 
-            await axios.delete(`http://localhost:8080/api/v1/deletePic/${id}`, {
+            await axios.delete(`http://localhost:8080/api/v1/pics/deletePic/${id}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                 }

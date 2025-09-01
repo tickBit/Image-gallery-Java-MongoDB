@@ -31,7 +31,7 @@ const register = async (username, email, password) => {
       { headers: { "Content-Type": "application/json" } }
     ).then((res) => {
         console.log(res);
-        setToken(res.data);
+        setToken(res.data.token);
         setAuthUsername(username);
 
     }).catch((err) => {

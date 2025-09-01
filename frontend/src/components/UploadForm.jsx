@@ -61,7 +61,7 @@ function UploadForm() {
         formData.append("description", description);
 
         await axios.post(
-                "http://localhost:8080/api/v1/upload",
+                "http://localhost:8080/api/v1/pics/upload",
                     formData,
             {
                 headers: {
@@ -69,7 +69,7 @@ function UploadForm() {
                 }
             }
         ).then((res) => {
-            console.log(res.data);
+            console.log(res);
             dispatch(uploadPic(res.data));
             console.log("Success!");
         }).catch((err) => {

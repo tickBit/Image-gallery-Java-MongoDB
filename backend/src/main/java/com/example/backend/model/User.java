@@ -3,9 +3,11 @@ package com.example.backend.model;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Document(collection = "users")
 public class User implements UserDetails {
     private String id;
     private String username;
@@ -77,7 +79,7 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
