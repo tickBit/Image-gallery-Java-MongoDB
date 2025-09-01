@@ -69,7 +69,7 @@ function Header() {
               {!deleteUser ? <div><Link onClick={() => setDeleteUser(true)}><span>Delete my account</span></Link></div>
                            : <div>
                                 <span className="alert alert-dark" role="alert">Are you sure, you want to delete your account?</span>
-                                <button id="okDel" className="alert alert-danger" role="alert">Ok</button>
+                                <button id="okDel" className="alert alert-danger" role="alert" onClick={(e) => handleDelete(e)}>Ok</button>
                                 <button id="cancelDel" className="alert alert-primary" role="alert" onClick={() => setDeleteUser(false)}>Cancel</button>
                             </div>}
           
