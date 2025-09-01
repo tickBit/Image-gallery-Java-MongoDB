@@ -9,3 +9,4 @@ React & Java + MongoDB + Docker demo
 
 ### Picture of the app running
 
+![JavaMongoDB](https://github.com/user-attachments/assets/eb46c44e-17f3-4436-afaa-296356486e1a)
